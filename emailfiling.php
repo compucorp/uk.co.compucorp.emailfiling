@@ -155,3 +155,26 @@ function emailfiling_civicrm_alterMailParams(&$params, $context) {
     $hook->run($params, $context);
   }
 }
+
+/**
+ * Implements hook_civicrm_buildForm().
+ */
+function emailfiling_civicrm_buildForm($formName, &$form) {
+  $hooks = [
+    new CRM_Emailfiling_Hook_BuildForm_Setting(),
+  ];
+
+  foreach ($hooks as $hook) {
+    $hook->run($formName, $form);
+  }
+}
+
+function emailfiling_civicrm_postProcess($formName, $form) {
+  $hooks = [
+    new CRM_Emailfiling_Hook_PostProcess_Setting(),
+  ];
+
+  foreach ($hooks as $hook) {
+    $hook->run($formName, $form);
+  }
+}
