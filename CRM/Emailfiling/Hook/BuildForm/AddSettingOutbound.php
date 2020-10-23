@@ -1,9 +1,11 @@
 <?php
 
+use Civi\Emailfiling\EmailfilingConst;
+
 /**
  * BuildForm Hook Class for settings page.
  */
-class CRM_Emailfiling_Hook_BuildForm_Setting {
+class CRM_Emailfiling_Hook_BuildForm_AddSettingOutbound {
 
   /**
    * Adds enable/disable processing setting to the settings form.
@@ -46,8 +48,8 @@ class CRM_Emailfiling_Hook_BuildForm_Setting {
    *   Form Class object.
    */
   private function addField(CRM_Core_Form &$form) {
-    $fieldName = 'emailfilingIsOutboundProcessingEnabled';
-    $fieldLabel = ts('Store a copy of sent emails on activity');
+    $fieldName = EmailfilingConst::settingOutbound('name');
+    $fieldLabel = EmailfilingConst::settingOutbound('title');
     $form->addYesNo($fieldName, $fieldLabel);
 
     // Set value to a field.
@@ -61,7 +63,7 @@ class CRM_Emailfiling_Hook_BuildForm_Setting {
   private function addTemplate() {
     $templatePath = CRM_Emailfiling_ExtensionUtil::path() . '/templates';
     CRM_Core_Region::instance('smtp-mailer-config')->add([
-      'template' => "{$templatePath}/CRM/Emailfiling/Admin/Form/Setting.tpl",
+      'template' => "{$templatePath}/CRM/Admin/Form/OutboundSetting.tpl",
       'weight' => -1,
     ]);
   }
@@ -73,7 +75,7 @@ class CRM_Emailfiling_Hook_BuildForm_Setting {
    *   Default value.
    */
   private function getDefaultValue() {
-    return 0;
+    return EmailfilingConst::settingOutbound('default');
   }
 
 }

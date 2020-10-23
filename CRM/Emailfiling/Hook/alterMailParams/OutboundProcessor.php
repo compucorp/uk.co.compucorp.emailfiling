@@ -1,6 +1,7 @@
 <?php
 
-use Civi\Emailfiling\MailProcessor;
+use Civi\Emailfiling\EmailfilingConst;
+use CRM_Emailfiling_Service_MailProcessor as MailProcessor;
 
 /**
  * Class EmailFilingOutboundProcessor.
@@ -51,7 +52,7 @@ class CRM_Emailfiling_Hook_alterMailParams_OutboundProcessor {
       return 0;
     }
     // Check if respective setting is enabled.
-    if (!Civi::settings()->get('emailfilingIsOutboundProcessingEnabled')) {
+    if (!Civi::settings()->get(EmailfilingConst::settingOutbound('name'))) {
       return 0;
     }
 

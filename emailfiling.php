@@ -161,7 +161,7 @@ function emailfiling_civicrm_alterMailParams(&$params, $context) {
  */
 function emailfiling_civicrm_buildForm($formName, &$form) {
   $hooks = [
-    new CRM_Emailfiling_Hook_BuildForm_Setting(),
+    new CRM_Emailfiling_Hook_BuildForm_AddSettingOutbound(),
   ];
 
   foreach ($hooks as $hook) {
@@ -171,7 +171,7 @@ function emailfiling_civicrm_buildForm($formName, &$form) {
 
 function emailfiling_civicrm_postProcess($formName, $form) {
   $hooks = [
-    new CRM_Emailfiling_Hook_PostProcess_Setting(),
+    new CRM_Emailfiling_Hook_PostProcess_SaveSettingOutbound(),
   ];
 
   foreach ($hooks as $hook) {

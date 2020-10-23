@@ -1,13 +1,11 @@
 <?php
 
-namespace Civi\Emailfiling;
-
 /**
  * Class MailProcessor
  *
  * @package Civi\EmailFiling
  */
-class MailProcessor {
+class CRM_Emailfiling_Service_MailProcessor {
 
   /**
    * Email data (comes from hook_civicrm_alterMailParams()).

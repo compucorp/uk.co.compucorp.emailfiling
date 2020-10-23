@@ -5,7 +5,7 @@
   <description>Allows to attach a copy of civicrm emails (inbound/outbound) as .eml file on activity.</description>
   <license>AGPL-3.0</license>
   <maintainer>
-    <author>Ivan Klochko @ Compucorp</author>
+    <author>Compucorp</author>
     <email>info@compucorp.co.uk</email>
   </maintainer>
   <urls>
