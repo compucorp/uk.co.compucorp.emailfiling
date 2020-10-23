@@ -166,7 +166,6 @@ function emailfiling_civicrm_emailProcessor($type, &$params, $mail, &$result, $a
   }
 }
 
-
 /**
  * Implements hook_civicrm_buildForm().
  */
@@ -185,6 +184,7 @@ function emailfiling_civicrm_buildForm($formName, &$form) {
 function emailfiling_civicrm_postProcess($formName, $form) {
   $hooks = [
     new CRM_Emailfiling_Hook_PostProcess_SaveSettingOutbound(),
+    new CRM_Emailfiling_Hook_PostProcess_SaveSettingInbound(),
   ];
 
   foreach ($hooks as $hook) {

@@ -24,6 +24,15 @@ class CRM_Emailfiling_Hook_BuildForm_SortActivityAttachments {
     $this->addTemplate();
   }
 
+  /**
+   * Checks if this hook should run.
+   *
+   * @param string $formName
+   *   Form name.
+   *
+   * @return bool
+   *   True if hook should run, false otherwise.
+   */
   private function shouldRun($formName) {
     if ($formName === 'CRM_Activity_Form_Activity') {
       return TRUE;

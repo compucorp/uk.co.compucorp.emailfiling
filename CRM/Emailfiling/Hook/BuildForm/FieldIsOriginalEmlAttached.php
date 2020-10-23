@@ -1,11 +1,28 @@
 <?php
 
+use CRM_Emailfiling_Helper_EmailfilingConst as EmailfilingConst;
+use CRM_Emailfiling_Helper_MailAccountSettings as MailAccountSettings;
+
 /**
  * Class CRM_Emailfiling_Hook_BuildForm_AddFieldIsOriginalEmlAttached.
  *
  * Adds new field to the Mail Account Settings form.
  */
 class CRM_Emailfiling_Hook_BuildForm_FieldIsOriginalEmlAttached {
+
+  /**
+   * Form field data.
+   *
+   * @var array
+   */
+  private $fieldData;
+
+  /**
+   * CRM_Emailfiling_Hook_BuildForm_FieldIsOriginalEmlAttached constructor.
+   */
+  public function __construct() {
+    $this->fieldData = EmailfilingConst::settingInbound();
+  }
 
   /**
    * Appends new field to the Mail Account Settings form.
@@ -24,6 +41,15 @@ class CRM_Emailfiling_Hook_BuildForm_FieldIsOriginalEmlAttached {
     $this->addTemplate();
   }
 
+  /**
+   * Checks if this hook should run.
+   *
+   * @param string $formName
+   *   Form name.
+   *
+   * @return bool
+   *   True if hook should run, false otherwise.
+   */
   private function shouldRun($formName) {
     if ($formName === 'CRM_Admin_Form_MailSettings') {
       return TRUE;
@@ -40,16 +66,15 @@ class CRM_Emailfiling_Hook_BuildForm_FieldIsOriginalEmlAttached {
    */
   private function addField(CRM_Core_Form $form) {
     $field = $form->add(
-      'checkbox',
-      'is_original_eml_attached',
-      ts('Store original email')
+      $this->fieldData['type'],
+      $this->fieldData['name'],
+      $this->fieldData['title']
     );
 
-    if ($form->getVar('_id')) {
-      $values = $form->getVar('_values');
-      $default = $this->getDefaultValue($values['value']);
-      $field->setValue($default);
-    }
+    // Set value to a field.
+    $setting = new MailAccountSettings(NULL, $form->getVar('_id'));
+    $element = &$form->_elements[$form->_elementIndex[$this->fieldData['name']]];
+    $element->setValue($setting->isEnabled());
   }
 
   /**
@@ -60,19 +85,6 @@ class CRM_Emailfiling_Hook_BuildForm_FieldIsOriginalEmlAttached {
     CRM_Core_Region::instance('page-body')->add([
       'template' => "{$templatePath}/CRM/Admin/Form/FieldIsOriginalEmlAttached.tpl",
     ]);
-  }
-
-  /**
-   * Returns the default value for the category instance field.
-   *
-   * @param int $categoryValue
-   *   Category value.
-   *
-   * @return mixed|null
-   *   Default value.
-   */
-  private function getDefaultValue($categoryValue) {
-    return NULL;
   }
 
 }

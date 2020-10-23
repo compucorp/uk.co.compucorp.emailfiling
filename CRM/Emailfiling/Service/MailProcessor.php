@@ -3,9 +3,9 @@
 require_once 'Mail/mime.php';
 
 /**
- * Class MailProcessor
+ * Class MailProcessor.
  *
- * @package Civi\EmailFiling
+ * Handles eml generation.
  */
 class CRM_Emailfiling_Service_MailProcessor {
 
