@@ -1,15 +1,13 @@
 <?php
 
-namespace Civi\Emailfiling;
-
 /**
- * Class EmailfilingConst
+ * Class EmailfilingConst.
  *
  * Stores some constants for this extension.
  * Since '.setting.php' file is not working here to add a new setting
- * to civicrm, we would use this class as a storage for some constant data.
+ * to civicrm, we would use this class as a storage for some field data.
  */
-class EmailfilingConst {
+class CRM_Emailfiling_Helper_EmailfilingConst {
 
   /**
    * Returns enable/disable outbound email processing setting data.

@@ -22,7 +22,7 @@
   </compatibility>
   <comments></comments>
   <classloader>
-    <psr4 prefix="Civi\Emailfiling\" path="src"/>
+    <psr4 prefix="Civi\" path="Civi"/>
   </classloader>
   <civix>
     <namespace>CRM/Emailfiling</namespace>

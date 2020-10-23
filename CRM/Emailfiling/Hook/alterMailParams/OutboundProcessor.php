@@ -1,12 +1,26 @@
 <?php
 
-use Civi\Emailfiling\EmailfilingConst;
+use CRM_Emailfiling_Helper_EmailfilingConst as EmailfilingConst;
 use CRM_Emailfiling_Service_MailProcessor as MailProcessor;
 
 /**
  * Class EmailFilingOutboundProcessor.
  */
 class CRM_Emailfiling_Hook_alterMailParams_OutboundProcessor {
+
+  /**
+   * Setting data used for form field.
+   *
+   * @var array
+   */
+  private $fieldData;
+
+  /**
+   * CRM_Emailfiling_Hook_alterMailParams_OutboundProcessor constructor.
+   */
+  public function __construct() {
+    $this->fieldData = EmailfilingConst::settingOutbound();
+  }
 
   /**
    * Outbound email processor.
@@ -52,7 +66,7 @@ class CRM_Emailfiling_Hook_alterMailParams_OutboundProcessor {
       return 0;
     }
     // Check if respective setting is enabled.
-    if (!Civi::settings()->get(EmailfilingConst::settingOutbound('name'))) {
+    if (!Civi::settings()->get($this->fieldData['name'])) {
       return 0;
     }
 

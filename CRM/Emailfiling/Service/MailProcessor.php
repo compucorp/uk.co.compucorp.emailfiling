@@ -34,7 +34,7 @@ class CRM_Emailfiling_Service_MailProcessor {
    *   (Optional)Contents of eml file.
    * @param array|null $message
    *   (Optional) Email data. If set to NULL then $this->message would be used.
-
+   *
    * @return array|false
    *   Attached file entity data, empty array or FALSE in case of error.
    *

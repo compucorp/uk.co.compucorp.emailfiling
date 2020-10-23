@@ -1,11 +1,25 @@
 <?php
 
-use Civi\Emailfiling\EmailfilingConst;
+use CRM_Emailfiling_Helper_EmailfilingConst as EmailfilingConst;
 
 /**
  * BuildForm Hook Class for settings page.
  */
 class CRM_Emailfiling_Hook_BuildForm_AddSettingOutbound {
+
+  /**
+   * Setting data used for form field.
+   *
+   * @var array
+   */
+  private $fieldData;
+
+  /**
+   * CRM_Emailfiling_Hook_BuildForm_AddSettingOutbound constructor.
+   */
+  public function __construct() {
+    $this->fieldData = EmailfilingConst::settingOutbound();
+  }
 
   /**
    * Adds enable/disable processing setting to the settings form.
@@ -48,8 +62,8 @@ class CRM_Emailfiling_Hook_BuildForm_AddSettingOutbound {
    *   Form Class object.
    */
   private function addField(CRM_Core_Form &$form) {
-    $fieldName = EmailfilingConst::settingOutbound('name');
-    $fieldLabel = EmailfilingConst::settingOutbound('title');
+    $fieldName = $this->fieldData['name'];
+    $fieldLabel = $this->fieldData['title'];
     $form->addYesNo($fieldName, $fieldLabel);
 
     // Set value to a field.
@@ -75,7 +89,7 @@ class CRM_Emailfiling_Hook_BuildForm_AddSettingOutbound {
    *   Default value.
    */
   private function getDefaultValue() {
-    return EmailfilingConst::settingOutbound('default');
+    return $this->fieldData['default'];
   }
 
 }

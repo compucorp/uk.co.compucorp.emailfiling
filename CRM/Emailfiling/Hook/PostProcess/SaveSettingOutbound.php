@@ -1,11 +1,25 @@
 <?php
 
-use Civi\Emailfiling\EmailfilingConst;
+use CRM_Emailfiling_Helper_EmailfilingConst as EmailfilingConst;
 
 /**
  * PostProcess Hook Class for settings page.
  */
 class CRM_Emailfiling_Hook_PostProcess_SaveSettingOutbound {
+
+  /**
+   * Setting data used for form field.
+   *
+   * @var array
+   */
+  private $fieldData;
+
+  /**
+   * CRM_Emailfiling_Hook_PostProcess_SaveSettingOutbound constructor.
+   */
+  public function __construct() {
+    $this->fieldData = EmailfilingConst::settingOutbound();
+  }
 
   /**
    * Saves value of custom setting value.
@@ -48,7 +62,7 @@ class CRM_Emailfiling_Hook_PostProcess_SaveSettingOutbound {
    */
   private function saveValue(CRM_Core_Form $form) {
     $values = $form->getVar('_submitValues');
-    $fieldName = EmailfilingConst::settingOutbound('name');
+    $fieldName = $this->fieldData['name'];
     $fieldValue = $values[$fieldName] ?? NULL;
 
     if (isset($fieldValue)) {
