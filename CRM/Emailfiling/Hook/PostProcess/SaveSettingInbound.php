@@ -68,7 +68,7 @@ class CRM_Emailfiling_Hook_PostProcess_SaveSettingInbound {
 
     if (isset($fieldValue)) {
       $setting = new MailAccountSettings(NULL, $form->getVar('_id'));
-      $setting->change($fieldValue);
+      $setting->toggle($fieldValue);
     }
   }
 
