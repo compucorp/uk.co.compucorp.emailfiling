@@ -156,12 +156,24 @@ function emailfiling_civicrm_alterMailParams(&$params, $context) {
   }
 }
 
+function emailfiling_civicrm_emailProcessor($type, &$params, $mail, &$result, $action) {
+  $hooks = [
+    new CRM_Emailfiling_Hook_emailProcessor_InboundProcessor(),
+  ];
+
+  foreach ($hooks as &$hook) {
+    $hook->run($type, $params, $mail, $result, $action);
+  }
+}
+
 /**
  * Implements hook_civicrm_buildForm().
  */
 function emailfiling_civicrm_buildForm($formName, &$form) {
   $hooks = [
     new CRM_Emailfiling_Hook_BuildForm_AddSettingOutbound(),
+    new CRM_Emailfiling_Hook_BuildForm_AddIsOriginalEmlAttachedField(),
+    new CRM_Emailfiling_Hook_BuildForm_SortActivityAttachments(),
   ];
 
   foreach ($hooks as $hook) {
@@ -172,6 +184,7 @@ function emailfiling_civicrm_buildForm($formName, &$form) {
 function emailfiling_civicrm_postProcess($formName, $form) {
   $hooks = [
     new CRM_Emailfiling_Hook_PostProcess_SaveSettingOutbound(),
+    new CRM_Emailfiling_Hook_PostProcess_SaveSettingInbound(),
   ];
 
   foreach ($hooks as $hook) {

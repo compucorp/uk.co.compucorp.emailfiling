@@ -1,9 +1,11 @@
 <?php
 
+require_once 'Mail/mime.php';
+
 /**
- * Class MailProcessor
+ * Class MailProcessor.
  *
- * @package Civi\EmailFiling
+ * Handles eml generation.
  */
 class CRM_Emailfiling_Service_MailProcessor {
 
@@ -22,7 +24,7 @@ class CRM_Emailfiling_Service_MailProcessor {
    */
   public function __construct(array $message) {
     $message['timestamp'] = $message['timestamp'] ?? time();
-    $this->message = $message;
+    $this->message = array_change_key_case($message);
   }
 
   /**
@@ -141,7 +143,7 @@ class CRM_Emailfiling_Service_MailProcessor {
     }
     unset($params['toName']);
     unset($params['toEmail']);
-    $params['To'] = "$toName <$toEmail>";
+    $params['To'] = $toEmail ? "$toName <$toEmail>" : $params['To'];
 
     // Apply the other fields.
     foreach ($params as $key => $value) {
