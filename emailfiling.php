@@ -172,7 +172,7 @@ function emailfiling_civicrm_emailProcessor($type, &$params, $mail, &$result, $a
 function emailfiling_civicrm_buildForm($formName, &$form) {
   $hooks = [
     new CRM_Emailfiling_Hook_BuildForm_AddSettingOutbound(),
-    new CRM_Emailfiling_Hook_BuildForm_FieldIsOriginalEmlAttached(),
+    new CRM_Emailfiling_Hook_BuildForm_AddIsOriginalEmlAttachedField(),
     new CRM_Emailfiling_Hook_BuildForm_SortActivityAttachments(),
   ];
 

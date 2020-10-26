@@ -40,7 +40,7 @@ class CRM_Emailfiling_Hook_emailProcessor_InboundProcessor {
     // variable contains attachments data as well, but again - file path is
     // outdated.
     // So to workaround this we will use mailToParams() to get all email
-    // data as array (which can then be used by MailProcessor class). If mail
+    // data as array (to reuse MailProcessor class and it's methods). If mail
     // has some attachments - we would fetch them from activity and append to
     // data array for further processing.
     $activityId = $result['id'];
@@ -69,7 +69,7 @@ class CRM_Emailfiling_Hook_emailProcessor_InboundProcessor {
   private function shouldRun($type, array $result, ezcMail $mail) {
     if ($type === 'activity' && !empty($result['id'])) {
       // Check if processing is enabled for this account.
-      $setting = new MailAccountSettings($mail->to);
+      $setting = new MailAccountSettings($mail->getHeader('to'));
       return $setting->isEnabled();
     }
 

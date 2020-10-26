@@ -52,7 +52,7 @@ class CRM_Emailfiling_Hook_BuildForm_SortActivityAttachments {
   private function addTemplate() {
     $templatePath = CRM_Emailfiling_ExtensionUtil::path() . '/templates';
     CRM_Core_Region::instance('page-body')->add([
-      'template' => "{$templatePath}/CRM/Admin/Form/SortActivityAttachments.tpl",
+      'template' => "{$templatePath}/CRM/Emailfiling/Form/Activity/SortActivityAttachments.tpl",
     ]);
   }
 

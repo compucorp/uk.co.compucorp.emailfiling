@@ -4,11 +4,11 @@ use CRM_Emailfiling_Helper_EmailfilingConst as EmailfilingConst;
 use CRM_Emailfiling_Helper_MailAccountSettings as MailAccountSettings;
 
 /**
- * Class CRM_Emailfiling_Hook_BuildForm_AddFieldIsOriginalEmlAttached.
+ * Class CRM_Emailfiling_Hook_BuildForm_AddIsOriginalEmlAttachedField.
  *
  * Adds new field to the Mail Account Settings form.
  */
-class CRM_Emailfiling_Hook_BuildForm_FieldIsOriginalEmlAttached {
+class CRM_Emailfiling_Hook_BuildForm_AddIsOriginalEmlAttachedField {
 
   /**
    * Form field data.
@@ -78,7 +78,7 @@ class CRM_Emailfiling_Hook_BuildForm_FieldIsOriginalEmlAttached {
   }
 
   /**
-   * Adds the template for case category instance field template.
+   * Adds the template for new setting field.
    */
   private function addTemplate() {
     $templatePath = CRM_Emailfiling_ExtensionUtil::path() . '/templates';

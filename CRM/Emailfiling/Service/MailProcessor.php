@@ -24,7 +24,7 @@ class CRM_Emailfiling_Service_MailProcessor {
    */
   public function __construct(array $message) {
     $message['timestamp'] = $message['timestamp'] ?? time();
-    $this->message = $message;
+    $this->message = array_change_key_case($message);
   }
 
   /**
@@ -84,8 +84,8 @@ class CRM_Emailfiling_Service_MailProcessor {
    */
   private function generateEmlFileName($message = NULL) {
     $message = $message ?? $this->message;
-    $res = date('Ymd_Hi_', $this->param('timestamp', $message) ?? time())
-      . preg_replace('!\W+!', '', trim(strtolower($this->param('subject', $message))));
+    $res = date('Ymd_Hi_', $message['timestamp'] ?? time())
+      . preg_replace('!\W+!', '', trim(strtolower($message['subject'])));
     // Avoid too long file names.
     $res = substr($res, 0, 128) . '.eml';
 
@@ -181,42 +181,6 @@ class CRM_Emailfiling_Service_MailProcessor {
     \CRM_Utils_Mail::setMimeParams($message);
 
     return $message;
-  }
-
-  /**
-   * Returns some parameter/item from message data.
-   *
-   * Normally we can get data in a simple way like this: $message['subject'],
-   * but as data may come from different sources, array keys may have different
-   * case, e.g: $message['Subject'].
-   * So we can use this method to be sure to fetch data any way.
-   * However it may not work if key name consists of multiple words like
-   * $message['MagicHeader'], in this case it's recommended to use correct case
-   * right away.
-   *
-   * @param string $name
-   *   Item name/key.
-   * @param array|null $message
-   *   (Optional) Email data. If set to NULL then $this->message would be used.
-   *
-   * @return mixed|null
-   *   Item from message array, or NULL if not found.
-   */
-  private function param($name, $message = NULL) {
-    $message = $message ?? $this->message;
-
-    if (isset($message[$name])) {
-      return $message[$name];
-    }
-
-    $name = strtolower($name);
-    if (isset($message[$name])) {
-      return $message[$name];
-    }
-
-    $name = ucfirst($name);
-
-    return $message[$name] ?? NULL;
   }
 
   /**
