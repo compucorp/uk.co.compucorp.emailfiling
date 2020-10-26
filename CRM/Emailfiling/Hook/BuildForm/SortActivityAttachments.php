@@ -34,7 +34,12 @@ class CRM_Emailfiling_Hook_BuildForm_SortActivityAttachments {
    *   True if hook should run, false otherwise.
    */
   private function shouldRun($formName) {
-    if ($formName === 'CRM_Activity_Form_Activity') {
+    $allowForms = [
+      'CRM_Activity_Form_Activity',
+      'CRM_Activity_Form_ActivityView',
+    ];
+
+    if (in_array($formName, $allowForms)) {
       return TRUE;
     }
 
