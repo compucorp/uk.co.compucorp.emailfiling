@@ -1,16 +1,18 @@
-<table style="display: none">
-  <tr class="original-email-container"><td class="label">Original Email</td><td class="view-value"></td></tr>
+<table class="hidden">
+  <tr class="original-email-container">
+    <td class="label">Original Email</td>
+    <td class="view-value"></td>
+  </tr>
 </table>
 
 {literal}
 <script type="text/javascript">
 (function($) {
-  var $attachmentsContainer = $('td.label:contains("Current Attachment")').siblings('.view-value');
+  var $attachmentsContainer = $('td.label:contains("Attachment")').siblings('.view-value');
   var $originalEmailContainer = $('.original-email-container .view-value');
   var emlCount = 0;
 
-  // Go through all attachments.
-  $('[id*="attachFileRecord_"]', $attachmentsContainer).each(function(){
+  function moveEmlFiles() {
     var filename = $('a', this).text().trim();
     var match = filename.match(/\d{8}_\d{4}_?\w*\.eml/);
 
@@ -20,12 +22,17 @@
       // Move file to a separate row.
       $originalEmailContainer.append(this);
     }
-  });
-
-  // Append original email file row to the activity card.
-  if (emlCount) {
-    $originalEmailContainer.closest('tr').insertAfter($attachmentsContainer.closest('tr'));
   }
+
+  (function init() {
+    // Go through all attachments.
+    $('[id*="attachFileRecord_"]', $attachmentsContainer).each(moveEmlFiles);
+
+    // Append original email file row to the activity card.
+    if (emlCount) {
+      $originalEmailContainer.closest('tr').insertAfter($attachmentsContainer.closest('tr'));
+    }
+  })();
 })(CRM.$);
 </script>
 {/literal}
