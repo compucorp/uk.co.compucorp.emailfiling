@@ -21,7 +21,7 @@
   (function init() {
     // Add new field to the form.
     $('.crm-mail-settings-form-block-is_original_eml_attached')
-      .insertBefore('.crm-mail-settings-form-block-activity_status'));
+      .insertBefore('.crm-mail-settings-form-block-activity_status');
 
     // Show/hide field when 'Used For?' selected value is changed.
     $('select[name="is_default"]')
