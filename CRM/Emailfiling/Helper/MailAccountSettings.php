@@ -58,15 +58,22 @@ class CRM_Emailfiling_Helper_MailAccountSettings {
       return;
     }
 
-    // Load mail account settings by email otherwise.
-    // Convert email address to object first.
+    // Convert email address to object.
     if ($email && is_string($email)) {
       $rfc = new Mail_RFC822();
       $email = $rfc->parseAddressList($email);
-      $email = $email[0] ?? NULL;
     }
 
-    $this->loadAccountByEmail($email);
+    if (empty($email[0])) {
+      return;
+    }
+
+    // Load mail account settings by email.
+    // As email may have multiple 'To' addresses we will check all of them
+    // until first account that matches given address is found.
+    for ($i = 0; $i < count($email) && !$this->getAccountId(); $i++) {
+      $this->loadAccountByEmail($email[$i]);
+    }
   }
 
   /**
