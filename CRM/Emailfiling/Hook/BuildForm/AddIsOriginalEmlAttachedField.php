@@ -53,7 +53,7 @@ class CRM_Emailfiling_Hook_BuildForm_AddIsOriginalEmlAttachedField {
    *   True if hook should run, false otherwise.
    */
   private function shouldRun($formName, CRM_Core_Form $form) {
-    if ($formName === 'CRM_Admin_Form_MailSettings' && $form->getVar('_id')) {
+    if ($formName === 'CRM_Admin_Form_MailSettings' && $form->getVar('_id') && $form->getAction() !== CRM_Core_Action::DELETE) {
       return TRUE;
     }
 
