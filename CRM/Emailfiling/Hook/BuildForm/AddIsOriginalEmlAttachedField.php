@@ -33,7 +33,7 @@ class CRM_Emailfiling_Hook_BuildForm_AddIsOriginalEmlAttachedField {
    *   Form Class object.
    */
   public function run($formName, CRM_Core_Form &$form) {
-    if (!$this->shouldRun($formName)) {
+    if (!$this->shouldRun($formName, $form)) {
       return;
     }
 
@@ -46,12 +46,14 @@ class CRM_Emailfiling_Hook_BuildForm_AddIsOriginalEmlAttachedField {
    *
    * @param string $formName
    *   Form name.
+   * @param CRM_Core_Form $form
+   *   Form Class object.
    *
    * @return bool
    *   True if hook should run, false otherwise.
    */
-  private function shouldRun($formName) {
-    if ($formName === 'CRM_Admin_Form_MailSettings') {
+  private function shouldRun($formName, CRM_Core_Form $form) {
+    if ($formName === 'CRM_Admin_Form_MailSettings' && $form->getVar('_id')) {
       return TRUE;
     }
 
