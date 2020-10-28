@@ -31,7 +31,7 @@ class CRM_Emailfiling_Hook_PostProcess_SaveSettingInbound {
    *   Form Class object.
    */
   public function run($formName, CRM_Core_Form &$form) {
-    if (!$this->shouldRun($formName)) {
+    if (!$this->shouldRun($formName, $form)) {
       return;
     }
 
@@ -43,12 +43,14 @@ class CRM_Emailfiling_Hook_PostProcess_SaveSettingInbound {
    *
    * @param string $formName
    *  Form Name.
+   * @param CRM_Core_Form $form
+   *   Form Class object.
    *
    * @return bool
    *   True if hook should run, false otherwise.
    */
-  private function shouldRun($formName) {
-    if ($formName === 'CRM_Admin_Form_MailSettings') {
+  private function shouldRun($formName, CRM_Core_Form $form) {
+    if ($formName === 'CRM_Admin_Form_MailSettings' && $form->getVar('_id')) {
       return TRUE;
     }
 
@@ -66,10 +68,8 @@ class CRM_Emailfiling_Hook_PostProcess_SaveSettingInbound {
     $fieldName = $this->fieldData['name'];
     $fieldValue = $values[$fieldName] ?? 0;
 
-    if (isset($fieldValue)) {
-      $setting = new MailAccountSettings(NULL, $form->getVar('_id'));
-      $setting->toggle($fieldValue);
-    }
+    $setting = new MailAccountSettings(NULL, $form->getVar('_id'));
+    $setting->toggle($fieldValue);
   }
 
 }
