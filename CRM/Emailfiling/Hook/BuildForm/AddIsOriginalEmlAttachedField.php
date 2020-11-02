@@ -53,7 +53,7 @@ class CRM_Emailfiling_Hook_BuildForm_AddIsOriginalEmlAttachedField {
    *   True if hook should run, false otherwise.
    */
   private function shouldRun($formName, CRM_Core_Form $form) {
-    if ($formName === 'CRM_Admin_Form_MailSettings' && $form->getVar('_id') && $form->getAction() !== CRM_Core_Action::DELETE) {
+    if ($formName === 'CRM_Admin_Form_MailSettings' && $form->getAction() !== CRM_Core_Action::DELETE) {
       return TRUE;
     }
 
@@ -74,9 +74,12 @@ class CRM_Emailfiling_Hook_BuildForm_AddIsOriginalEmlAttachedField {
     );
 
     // Set value to a field.
-    $setting = new MailAccountSettings(NULL, $form->getVar('_id'));
-    $element = &$form->_elements[$form->_elementIndex[$this->fieldData['name']]];
-    $element->setValue($setting->isEnabled());
+    $accountId = $form->getVar('_id');
+    if ($accountId) {
+      $setting = new MailAccountSettings(['id' => $accountId]);
+      $element = &$form->_elements[$form->_elementIndex[$this->fieldData['name']]];
+      $element->setValue($setting->isEnabled());
+    }
   }
 
   /**
