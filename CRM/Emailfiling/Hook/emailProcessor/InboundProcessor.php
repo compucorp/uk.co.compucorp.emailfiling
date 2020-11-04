@@ -69,7 +69,8 @@ class CRM_Emailfiling_Hook_emailProcessor_InboundProcessor {
   private function shouldRun($type, array $result, ezcMail $mail) {
     if ($type === 'activity' && !empty($result['id'])) {
       // Check if processing is enabled for this account.
-      $setting = new MailAccountSettings($mail->getHeader('to'));
+      $data = ['email' => $mail->getHeader('to')];
+      $setting = new MailAccountSettings($data);
       return $setting->isEnabled();
     }
 
