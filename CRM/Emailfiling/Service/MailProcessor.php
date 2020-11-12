@@ -127,23 +127,23 @@ class CRM_Emailfiling_Service_MailProcessor {
     $message = new \Mail_mime("\n");
 
     // Add date parameter.
-    $params['Date'] = $params['Date'] ?? date(DATE_RFC822, $params['timestamp'] ?? time());
+    $params['date'] = $params['date'] ?? date(DATE_RFC822, $params['timestamp'] ?? time());
     if (isset($params['timestamp'])) {
       unset($params['timestamp']);
     }
 
     // Consolidate: 'toName' and 'toEmail' should be 'To'.
-    $toName = trim($params['toName']);
-    $toEmail = trim($params['toEmail']);
+    $toName = trim($params['toname']);
+    $toEmail = trim($params['toemail']);
     if ($toName == $toEmail || strpos($toName, '@') !== FALSE) {
       $toName = NULL;
     }
     else {
       $toName = \CRM_Utils_Mail::formatRFC2822Name($toName);
     }
-    unset($params['toName']);
-    unset($params['toEmail']);
-    $params['To'] = $toEmail ? "$toName <$toEmail>" : $params['To'];
+    unset($params['toname']);
+    unset($params['toemail']);
+    $params['to'] = $toEmail ? "$toName <$toEmail>" : $params['to'];
 
     // Apply the other fields.
     foreach ($params as $key => $value) {
